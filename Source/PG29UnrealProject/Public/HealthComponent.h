@@ -32,10 +32,10 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, ReplicatedUsing = "OnRep_CurrentHealth", meta = (ClampMin = "0", ClampMax = "100", UIMin = "0", UIMax = "100"))
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, ReplicatedUsing = OnRep_CurrentHealth, meta = (ClampMin = "0", ClampMax = "100", UIMin = "0", UIMax = "100"))
 	float CurrentHealth;
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, ReplicatedUsing = "OnRep_MaxHealth", meta = (ClampMin = "0", ClampMax = "100", UIMin = "0", UIMax = "100"))
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, ReplicatedUsing = OnRep_MaxHealth, meta = (ClampMin = "0", ClampMax = "100", UIMin = "0", UIMax = "100"))
 	float MaxHealth;
 
 	UFUNCTION()

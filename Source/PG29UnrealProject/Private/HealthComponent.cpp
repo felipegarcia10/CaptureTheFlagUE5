@@ -3,6 +3,7 @@
 
 #include "HealthComponent.h"
 #include "Net/UnrealNetwork.h"
+#include  "NetworkingGameMode.h"
 
 // Sets default values for this component's properties
 UHealthComponent::UHealthComponent()
@@ -63,6 +64,13 @@ void UHealthComponent::OnOwningActorTakenDamage(AActor* DamagedActor, float Dama
 		OnRep_CurrentHealth(OldHealth);
 		if (CurrentHealth <= 0.0f)
 		{
+			if (ANetworkingGameMode* GameMode = Cast<ANetworkingGameMode>(GetWorld()->GetAuthGameMode()))
+			{
+				if (APawn* Pawn = Cast<APawn>(DamagedActor))
+				{
+					GameMode->OnPlayerDied(Pawn->GetController());
+				}
+			}
 			DamagedActor->Destroy();
 		}
 	}
