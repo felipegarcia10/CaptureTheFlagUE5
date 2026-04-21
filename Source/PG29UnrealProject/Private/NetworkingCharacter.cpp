@@ -9,6 +9,7 @@
 #include "NetworkingBullet.h"
 #include "EnhancedInputComponent.h"
 #include "HealthComponent.h"
+#include "NetworkingGrenade.h"
 
 // Sets default values
 ANetworkingCharacter::ANetworkingCharacter()
@@ -104,6 +105,11 @@ void ANetworkingCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 			{
 				EnhancedInputComponent->BindAction(FireSingleInputAction, ETriggerEvent::Triggered, this, &ANetworkingCharacter::OnFireInputReceived);
 			}
+
+			if (ThrowGrenadeInputAction)
+			{
+				EnhancedInputComponent->BindAction(ThrowGrenadeInputAction, ETriggerEvent::Triggered, this, &ANetworkingCharacter::OnThrowGrenadeInputRecieved);
+			}
 		}
 	}
 }
@@ -141,3 +147,21 @@ void ANetworkingCharacter::OnFireInputReceived(const FInputActionValue& Value)
 	Shoot_Server();
 }
 
+void ANetworkingCharacter::OnThrowGrenadeInputRecieved(const FInputActionValue& Value)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Grenade button pressed!"));
+	ThrowGrenade_Server();
+}
+
+void ANetworkingCharacter::ThrowGrenade_Server_Implementation()
+{
+	if (GrenadeClassToSpawn && GetWorld())
+	{
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.Instigator = this;
+		SpawnParams.Owner = GetPlayerState();
+		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+		GetWorld()->SpawnActor<ANetworkingGrenade>(GrenadeClassToSpawn, GetBulletSpawnTransform(), SpawnParams);
+	}
+}

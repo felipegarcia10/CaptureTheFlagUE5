@@ -125,6 +125,7 @@ bool ANetworkingGameMode::ReadyToEndMatch_Implementation()
 				}
 			}
 		}
+		return false;
 	}
 
 	bool IsTeamAAlive = false;
