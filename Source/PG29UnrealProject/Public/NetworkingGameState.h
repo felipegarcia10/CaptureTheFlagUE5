@@ -13,5 +13,8 @@ UCLASS()
 class PG29UNREALPROJECT_API ANetworkingGameState : public AGameState
 {
 	GENERATED_BODY()
+
+	UFUNCTION(NetMulticast, Reliable)
+	void Multicast_ShowGameOver();
 	
 };

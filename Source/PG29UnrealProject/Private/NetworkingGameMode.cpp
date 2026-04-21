@@ -174,3 +174,22 @@ int32 ANetworkingGameMode::GetTeamCount(const FGameplayTag& TeamTag) const
 	}
 	return Count;
 }
+
+void ANetworkingGameMode::RestartGame()
+{
+	// Option 1 — restart match (soft reset)
+	//RestartMatch();
+
+	// Option 2 — hard reset (always works)
+	// Uncomment this if RestartMatch does nothing
+
+	
+	FString CurrentLevel = GetWorld()->GetName();
+
+	UGameplayStatics::OpenLevel(
+		this,
+		FName(*CurrentLevel),
+		true
+	);
+	
+}

@@ -43,6 +43,8 @@ public:
 	
 	void OnPlayerDied(AController* Controller);
 
+	void RestartGame();
+
 private:
 
 	int32 GetTeamCount(const FGameplayTag& TeamTag) const;

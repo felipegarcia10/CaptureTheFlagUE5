@@ -17,5 +17,10 @@ class PG29UNREALPROJECT_API ANetworkingPlayerController : public APlayerControll
 public:
 
 	ANetworkingPlayerController();
+	UFUNCTION(Server, Reliable, BlueprintCallable)
+	void Server_RequestRestart();
+
+	UFUNCTION(Client, Reliable)
+	void ClientShowGameOver();
 	
 };
