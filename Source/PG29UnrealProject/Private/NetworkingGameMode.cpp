@@ -12,6 +12,7 @@
 #include "Engine.h"
 #include "EngineUtils.h"
 #include "Logging/StructuredLog.h"
+#include "TimerManager.h"
 
 DEFINE_LOG_CATEGORY(LogNetworkingGameMode)
 
@@ -124,6 +125,7 @@ bool ANetworkingGameMode::ReadyToEndMatch_Implementation()
 				}
 			}
 		}
+		return false;
 	}
 
 	bool IsTeamAAlive = false;
@@ -144,6 +146,18 @@ bool ANetworkingGameMode::ReadyToEndMatch_Implementation()
 	}
 
 	return !(IsTeamAAlive && IsTeamBAlive);
+}
+
+void ANetworkingGameMode::OnPlayerDied(AController* Controller)
+{
+	if (Controller)
+	{
+		FTimerHandle RespawnTimerHandle;
+		GetWorldTimerManager().SetTimer(RespawnTimerHandle, [this, Controller]()
+		{
+			RestartPlayer(Controller);
+		}, 5.0f, false);
+	}
 }
 
 int32 ANetworkingGameMode::GetTeamCount(const FGameplayTag& TeamTag) const

@@ -40,6 +40,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Teams|Spawn")
 	TSubclassOf<ANetworkingTeamPlayerStart> SpawnPointClass;
+	
+	void OnPlayerDied(AController* Controller);
 
 private:
 
