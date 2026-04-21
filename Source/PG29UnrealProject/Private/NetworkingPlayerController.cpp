@@ -13,10 +13,10 @@ ANetworkingPlayerController::ANetworkingPlayerController()
 
 }
 
-//void ANetworkingPlayerController::ClientShowGameOver_Implementation()
-//{
-//    CreateGameOverWidget();
-//}
+void ANetworkingPlayerController::ClientShowGameOver_Implementation()
+{
+    //CreateGameOverWidget();
+}
 
 
 void ANetworkingPlayerController::Server_RequestRestart_Implementation()

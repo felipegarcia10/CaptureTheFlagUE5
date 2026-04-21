@@ -3,6 +3,7 @@
 
 #include "NetworkingGameState.h"
 #include "NetworkingPlayerController.h"
+#include "GameFramework\PlayerState.h"
 
 void ANetworkingGameState::Multicast_ShowGameOver_Implementation()
 {
