@@ -43,3 +43,13 @@ void AUIPlayerController::BeginPlay()
 
 	bShowMouseCursor = true;
 }
+
+void AUIPlayerController::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	if (ActiveWidget)
+	{
+		ActiveWidget->RemoveFromParent();
+		ActiveWidget = nullptr;
+	}
+	Super::EndPlay(EndPlayReason);
+}
