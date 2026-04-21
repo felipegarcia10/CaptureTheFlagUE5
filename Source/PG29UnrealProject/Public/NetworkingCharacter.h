@@ -9,6 +9,7 @@
 
 
 class ANetworkingBullet;
+class ANetworkingGrenade;
 class UHealthComponent;
 class UInputMappingContext;
 class UInputAction;
@@ -28,6 +29,9 @@ public:
 	UFUNCTION(Server, Reliable, BlueprintCallable)
 	void Shoot_Server();
 
+	UFUNCTION(Server, Reliable, BlueprintCallable)
+	void ThrowGrenade_Server();
+
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 	TObjectPtr<UHealthComponent> HealthComponent;
 
@@ -36,6 +40,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Shooting")
 	TSubclassOf<ANetworkingBullet> BulletClassToSpawn;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Grenade")
+	TSubclassOf<ANetworkingGrenade> GrenadeClassToSpawn;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Input")
 	const TObjectPtr<UInputMappingContext> DefaultMappingContext;
@@ -52,6 +59,9 @@ public:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Input")
 	TObjectPtr<UInputAction> FireSingleInputAction;
 
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Input")
+	TObjectPtr<UInputAction> ThrowGrenadeInputAction;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -64,6 +74,7 @@ protected:
 	void OnLookInputReceived(const FInputActionValue& Value);
 	void OnJumpInputReceived(const FInputActionValue& Value);
 	void OnFireInputReceived(const FInputActionValue& Value);
+	void OnThrowGrenadeInputRecieved(const FInputActionValue& Value);
 
 public:	
 	// Called every frame
