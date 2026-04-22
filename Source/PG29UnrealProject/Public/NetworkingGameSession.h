@@ -17,6 +17,8 @@ class PG29UNREALPROJECT_API ANetworkingGameSession : public AGameSession
 
 public:
 
+	ANetworkingGameSession();
+
 	virtual FString ApproveLogin(const FString& Options) override;
-	
+
 };

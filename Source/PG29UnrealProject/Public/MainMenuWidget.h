@@ -19,7 +19,7 @@ public:
 	FString ServerName = TEXT("My Server");
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Menu")
-	int32 MaxPlayers = 2;
+	int32 MaxPlayers = 100;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Menu")
 	FString LobbyMapPath = TEXT("/Game/Assets/Maps/LVL_MainMenu");
