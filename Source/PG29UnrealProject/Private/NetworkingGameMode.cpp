@@ -21,8 +21,6 @@ ANetworkingGameMode::ANetworkingGameMode()
 	PlayerStateClass = ANetworkingPlayerState::StaticClass();
 	HUDClass = ANetworkingHUD::StaticClass();
 	DefaultPawnClass = ANetworkingCharacter::StaticClass();
-
-	bStartPlayersAsSpectators = true;
 }
 
 void ANetworkingGameMode::PreLogin(const FString& Options, const FString& Address, const FUniqueNetIdRepl& UniqueId, FString& ErrorMessage)

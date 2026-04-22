@@ -17,5 +17,7 @@ class PG29UNREALPROJECT_API ANetworkingPlayerController : public APlayerControll
 public:
 
 	ANetworkingPlayerController();
-	
+
+protected:
+	virtual void BeginPlay() override;
 };
