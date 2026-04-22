@@ -8,8 +8,6 @@
 #include "OnlineSessionSettings.h"
 #include "DemoGameInstance.generated.h"
 
-DECLARE_LOG_CATEGORY_EXTERN(LogDemoGameInstance, Log, All);
-
 USTRUCT(BlueprintType)
 struct FSessionListEntry
 {

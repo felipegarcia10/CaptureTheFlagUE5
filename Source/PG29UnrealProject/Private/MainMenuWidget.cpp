@@ -46,7 +46,6 @@ void UMainMenuWidget::HandleJoinClicked()
 {
 	if (APlayerController* PC = GetOwningPlayer())
 	{
-		if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Cyan, FString::Printf(TEXT("Connecting to %s..."), *JoinIp));
 		PC->ClientTravel(JoinIp, TRAVEL_Absolute);
 	}
 }
@@ -60,10 +59,8 @@ void UMainMenuWidget::HandleSessionsFound(const TArray<FSessionListEntry>& Resul
 {
 	if (Results.Num() == 0)
 	{
-		if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Orange, TEXT("No servers found"));
 		return;
 	}
-	if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Green, FString::Printf(TEXT("Joining session 0 of %d"), Results.Num()));
 	if (UDemoGameInstance* GI = GetDemoGameInstance())
 	{
 		GI->JoinSessionAtIndex(0);

@@ -7,10 +7,8 @@
 #include "NetworkingGameSession.generated.h"
 
 /**
- * 
+ *
  */
-
-DECLARE_LOG_CATEGORY_EXTERN(LogNetworkingGameSession, Log, All);
 
 UCLASS()
 class PG29UNREALPROJECT_API ANetworkingGameSession : public AGameSession

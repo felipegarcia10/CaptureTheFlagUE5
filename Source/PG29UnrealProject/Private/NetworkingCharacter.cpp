@@ -149,7 +149,6 @@ void ANetworkingCharacter::OnFireInputReceived(const FInputActionValue& Value)
 
 void ANetworkingCharacter::OnThrowGrenadeInputRecieved(const FInputActionValue& Value)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Grenade button pressed!"));
 	ThrowGrenade_Server();
 }
 

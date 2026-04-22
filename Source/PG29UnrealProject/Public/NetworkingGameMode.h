@@ -12,7 +12,6 @@
  */
 
 class ANetworkingTeamPlayerStart;
-DECLARE_LOG_CATEGORY_EXTERN(LogNetworkingGameMode, Log, All);
 
 UCLASS()
 class PG29UNREALPROJECT_API ANetworkingGameMode : public AGameMode

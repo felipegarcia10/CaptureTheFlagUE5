@@ -6,8 +6,6 @@
 #include "GameFramework/GameMode.h"
 #include "LobbyGameMode.generated.h"
 
-DECLARE_LOG_CATEGORY_EXTERN(LogLobbyGameMode, Log, All);
-
 UCLASS()
 class PG29UNREALPROJECT_API ALobbyGameMode : public AGameMode
 {

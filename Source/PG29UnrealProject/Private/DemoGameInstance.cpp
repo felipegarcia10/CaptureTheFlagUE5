@@ -3,13 +3,9 @@
 
 #include "DemoGameInstance.h"
 
-#include "Engine.h"
-#include "Logging/StructuredLog.h"
 #include "OnlineSubsystem.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/PlayerController.h"
-
-DEFINE_LOG_CATEGORY(LogDemoGameInstance);
 
 const FName UDemoGameInstance::NetSessionName = FName("CTFSession");
 const FName UDemoGameInstance::ServerNameKey = FName("SERVER_NAME");
@@ -17,11 +13,6 @@ const FName UDemoGameInstance::ServerNameKey = FName("SERVER_NAME");
 void UDemoGameInstance::Init()
 {
 	Super::Init();
-	if (UWorld* World = GetWorld())
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Magenta, TEXT("Game Instance Init"));
-		UE_LOGFMT(LogCore, Warning, "Game Instance Initialized");
-	}
 }
 
 void UDemoGameInstance::Shutdown()
@@ -33,11 +24,6 @@ void UDemoGameInstance::Shutdown()
 		Sessions->ClearOnJoinSessionCompleteDelegates(this);
 		Sessions->ClearOnDestroySessionCompleteDelegates(this);
 		Sessions->ClearOnStartSessionCompleteDelegates(this);
-	}
-	if (UWorld* World = GetWorld())
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Magenta, TEXT("Game Instance Shutdown"));
-		UE_LOGFMT(LogCore, Warning, "Game Instance Shutdown");
 	}
 	Super::Shutdown();
 }
@@ -59,7 +45,6 @@ void UDemoGameInstance::HostSession(const FString& ServerName, int32 MaxPlayers,
 	IOnlineSessionPtr Sessions = GetSessions();
 	if (!Sessions.IsValid())
 	{
-		UE_LOG(LogDemoGameInstance, Warning, TEXT("HostSession: no session interface available"));
 		OnHostSessionComplete.Broadcast(false);
 		return;
 	}
@@ -98,12 +83,6 @@ void UDemoGameInstance::HandleCreateSessionComplete(FName InSessionName, bool bW
 		Sessions->ClearOnCreateSessionCompleteDelegates(this);
 	}
 
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, bWasSuccessful ? FColor::Green : FColor::Red,
-			FString::Printf(TEXT("CreateSession complete: %s"), bWasSuccessful ? TEXT("OK") : TEXT("FAILED")));
-	}
-
 	OnHostSessionComplete.Broadcast(bWasSuccessful);
 
 	if (bWasSuccessful && !PendingLobbyMap.IsEmpty())
@@ -117,18 +96,14 @@ void UDemoGameInstance::FindSessions()
 	IOnlineSessionPtr Sessions = GetSessions();
 	if (!Sessions.IsValid())
 	{
-		if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("FindSessions: no session interface"));
 		OnSessionsFound.Broadcast(TArray<FSessionListEntry>());
 		return;
 	}
 
 	if (SessionSearch.IsValid() && SessionSearch->SearchState == EOnlineAsyncTaskState::InProgress)
 	{
-		if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Yellow, TEXT("FindSessions: already searching"));
 		return;
 	}
-
-	if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Cyan, TEXT("FindSessions: searching LAN..."));
 
 	SessionSearch = MakeShared<FOnlineSessionSearch>();
 	SessionSearch->MaxSearchResults = 50;
@@ -167,13 +142,6 @@ void UDemoGameInstance::HandleFindSessionsComplete(bool bWasSuccessful)
 			Entries.Add(E);
 		}
 	}
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, bWasSuccessful ? FColor::Green : FColor::Red,
-			FString::Printf(TEXT("FindSessions complete: success=%s results=%d"),
-				bWasSuccessful ? TEXT("true") : TEXT("false"), Entries.Num()));
-	}
-
 	OnSessionsFound.Broadcast(Entries);
 }
 

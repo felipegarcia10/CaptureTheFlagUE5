@@ -61,15 +61,5 @@ void ANetworkingGrenade::Explode()
 void ANetworkingGrenade::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	DrawDebugSphere(
-		GetWorld(),
-		GetActorLocation(),
-		ExplosionRadius,
-		32,
-		FColor::Yellow,
-		false,
-		-1.0f
-	);
 }
 

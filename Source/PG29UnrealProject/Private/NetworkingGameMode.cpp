@@ -11,10 +11,7 @@
 #include "NetworkingTeamPlayerStart.h"
 #include "Engine.h"
 #include "EngineUtils.h"
-#include "Logging/StructuredLog.h"
 #include "TimerManager.h"
-
-DEFINE_LOG_CATEGORY(LogNetworkingGameMode)
 
 ANetworkingGameMode::ANetworkingGameMode()
 {
@@ -31,15 +28,6 @@ ANetworkingGameMode::ANetworkingGameMode()
 void ANetworkingGameMode::PreLogin(const FString& Options, const FString& Address, const FUniqueNetIdRepl& UniqueId, FString& ErrorMessage)
 {
 	Super::PreLogin(Options, Address, UniqueId, ErrorMessage);
-
-	if (!ErrorMessage.IsEmpty())
-	{
-		UE_LOGFMT(LogNetworkingGameMode, Log, "PreLogin| Login Failed from Address = {Address} | Reason = {Reason} | CurrentPlayers = {NumPlayers}",
-			("Address", Address),
-			("Reason", ErrorMessage),
-			("NumPlayers", GetNumPlayers()));
-	}
-
 }
 
 void ANetworkingGameMode::PostLogin(APlayerController* NewPlayer)
@@ -50,12 +38,6 @@ void ANetworkingGameMode::PostLogin(APlayerController* NewPlayer)
 	{
 		if (ANetworkingPlayerState* LoggedInPlayerState = NewPlayer->GetPlayerState<ANetworkingPlayerState>())
 		{
-			UE_LOGFMT(LogNetworkingGameMode, Log, "PostLogin| Player Joined : Name = {PlayerName} | ID = {PlayerID} | TotalPlayers = {NumPlayers}",
-				("PlayerName", LoggedInPlayerState->GetPlayerName()),
-				("PlayerID", LoggedInPlayerState->GetPlayerId()),
-				("NumPlayers", GetNumPlayers()));
-
-
 			const int32 CountTeamA = GetTeamCount(Tag_TeamA);
 			const int32 CountTeamB = GetTeamCount(Tag_TeamB);
 
