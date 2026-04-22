@@ -22,7 +22,10 @@ public:
 	int32 MaxPlayers = 2;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Menu")
-	FString LobbyMapPath = TEXT("/Game/Assets/Maps/LVL_Lobby");
+	FString LobbyMapPath = TEXT("/Game/Assets/Maps/LVL_MainMenu");
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Menu")
+	FString JoinIp = TEXT("127.0.0.1");
 
 protected:
 	virtual void NativeConstruct() override;

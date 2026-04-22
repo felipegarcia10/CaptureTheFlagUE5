@@ -98,6 +98,12 @@ void UDemoGameInstance::HandleCreateSessionComplete(FName InSessionName, bool bW
 		Sessions->ClearOnCreateSessionCompleteDelegates(this);
 	}
 
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, bWasSuccessful ? FColor::Green : FColor::Red,
+			FString::Printf(TEXT("CreateSession complete: %s"), bWasSuccessful ? TEXT("OK") : TEXT("FAILED")));
+	}
+
 	OnHostSessionComplete.Broadcast(bWasSuccessful);
 
 	if (bWasSuccessful && !PendingLobbyMap.IsEmpty())
@@ -111,9 +117,18 @@ void UDemoGameInstance::FindSessions()
 	IOnlineSessionPtr Sessions = GetSessions();
 	if (!Sessions.IsValid())
 	{
+		if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("FindSessions: no session interface"));
 		OnSessionsFound.Broadcast(TArray<FSessionListEntry>());
 		return;
 	}
+
+	if (SessionSearch.IsValid() && SessionSearch->SearchState == EOnlineAsyncTaskState::InProgress)
+	{
+		if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Yellow, TEXT("FindSessions: already searching"));
+		return;
+	}
+
+	if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Cyan, TEXT("FindSessions: searching LAN..."));
 
 	SessionSearch = MakeShared<FOnlineSessionSearch>();
 	SessionSearch->MaxSearchResults = 50;
@@ -152,6 +167,13 @@ void UDemoGameInstance::HandleFindSessionsComplete(bool bWasSuccessful)
 			Entries.Add(E);
 		}
 	}
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, bWasSuccessful ? FColor::Green : FColor::Red,
+			FString::Printf(TEXT("FindSessions complete: success=%s results=%d"),
+				bWasSuccessful ? TEXT("true") : TEXT("false"), Entries.Num()));
+	}
+
 	OnSessionsFound.Broadcast(Entries);
 }
 
