@@ -20,4 +20,6 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	UFUNCTION(Server, Reliable, BlueprintCallable)
+	void Server_RequestRestart();
 };

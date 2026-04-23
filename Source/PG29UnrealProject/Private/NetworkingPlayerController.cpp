@@ -3,6 +3,8 @@
 
 #include "NetworkingPlayerController.h"
 #include "NetworkingCameraManager.h"
+#include "NetworkingGameMode.h"
+//#include "Kismet/GameplayStatics.h"
 
 ANetworkingPlayerController::ANetworkingPlayerController()
 {
@@ -26,4 +28,19 @@ void ANetworkingPlayerController::BeginPlay()
 	SetInputMode(Mode);
 
 	bShowMouseCursor = false;
+}
+
+void ANetworkingPlayerController::Server_RequestRestart_Implementation()
+{
+	if (!HasAuthority())
+		return;
+	if (!IsLocalController())
+		return;
+
+	ANetworkingGameMode* GM = GetWorld()->GetAuthGameMode<ANetworkingGameMode>();
+
+	if (GM)
+	{
+		GM->RestartGame();
+	}
 }
